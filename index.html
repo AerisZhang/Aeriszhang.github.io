@@ -311,13 +311,12 @@
         
           
             <p>#pagerank算法的java实现<br>2014年在对Google搜索无限崇拜之下，用浅薄的理解，通过网上的资料学习了一下pagerank算法并且用java实现，测试了一个大规模结果集和一个小规模十个节点的结果集，用Google的pagerank测试图测试了结果集进行了验证。</p>
-<p>##1.  pagerank算法简介<br>随着互联网的广泛使用，用户对搜索引擎的使用越来越频繁，用户需要一个优质的搜索引擎能够及时提供所需要的信息，同时企业也需要良好的网络排名来帮助迅速拓展业务，所以搜索引擎只有得到公正正确的排名算法才能支持在WWW中得到一席之地。</p>
+<h2 id="1-pagerank算法简介"><a href="#1-pagerank算法简介" class="headerlink" title="1.  pagerank算法简介"></a>1.  pagerank算法简介</h2><p>随着互联网的广泛使用，用户对搜索引擎的使用越来越频繁，用户需要一个优质的搜索引擎能够及时提供所需要的信息，同时企业也需要良好的网络排名来帮助迅速拓展业务，所以搜索引擎只有得到公正正确的排名算法才能支持在WWW中得到一席之地。</p>
 <p>Google依靠其PageRank机制及收敛算法一直处于该领域的领先地位。</p>
-<p><img src="\image\google.png" alt="Google"></p>
+<p><img src="http://i2.piimg.com/95d619372f85d7a4.png" alt="google"></p>
 <p>PageRank即网页排名，是Google用于用来标识网页的等级/重要性的一种方法。目前很多重要的链接分析算法都是在PageRank算法基础上衍生出来的。PageRank算法计算出网页的PageRank值，从而决定网页在搜素结果中的出现位置，PageRank值越高的网页，在结果中出现的位置越前，简单的说，PageRank是代表网络上某个页面重要性的一个数值。</p>
 <p>PR值的级别分成从0到10级，10级为满分。PR值越高说明该网页越受欢迎（越重要）。</p>
-<p>##2. pagerank的计算基础</p>
-<p>一个页面的PageRank值是由其他页面的PageRank值计算得到的。Google不断的重复计算每个页面的PageRank，如果给每一个页面一个随机PageRank值（非0），那么经过不断的重复计算，这些页面的PR值会趋向于正常和稳定。这就是搜索引擎使用它的原因。</p>
+<h2 id="2-pagerank的计算基础"><a href="#2-pagerank的计算基础" class="headerlink" title="2. pagerank的计算基础"></a>2. pagerank的计算基础</h2><p>一个页面的PageRank值是由其他页面的PageRank值计算得到的。Google不断的重复计算每个页面的PageRank，如果给每一个页面一个随机PageRank值（非0），那么经过不断的重复计算，这些页面的PR值会趋向于正常和稳定。这就是搜索引擎使用它的原因。</p>
 <p>对于某个互联网网页A来说，该网页PageRank的计算基于以下两个基本假设：</p>
 <ul>
 <li><p>数量假设：在Web图模型中，如果一个页面节点接收到的其他网页指向的入链数量越多，那么这个页面越重要。</p>
@@ -326,14 +325,12 @@
 </li>
 </ul>
 <p>利用以上两个假设，PageRank算法刚开始赋予每个网页相同的重要性得分，通过迭代递归计算来更新每个页面节点的PageRank得分，直到得分稳定为止。</p>
-<p>##3.pagerank算法</p>
-<p>###3.1算法原理</p>
-<p>PageRank算法基于“从许多优质网页链接过来的网页，必定还是优质网页”的回归关系，来判定所有网页的重要性：如果从网页A指向网页B的链接被看做是页面A对B的支持投票，Google根据这个投票数来判断页面的重要性。</p>
+<h2 id="3-pagerank算法"><a href="#3-pagerank算法" class="headerlink" title="3.pagerank算法"></a>3.pagerank算法</h2><h3 id="3-1算法原理"><a href="#3-1算法原理" class="headerlink" title="3.1算法原理"></a>3.1算法原理</h3><p>PageRank算法基于“从许多优质网页链接过来的网页，必定还是优质网页”的回归关系，来判定所有网页的重要性：如果从网页A指向网页B的链接被看做是页面A对B的支持投票，Google根据这个投票数来判断页面的重要性。</p>
 <ul>
 <li>1）在初始阶段：网页通过链接关系构建起Web图，每个页面设置相同的PageRank值，通过若干轮的计算，会得到每个页面所获得的最终PageRank值。随着每一轮的计算进行，网页当前的PageRank值会不断得到更新。</li>
 </ul>
 <ul>
-<li>2）在一轮中更新页面PageRank得分的计算方法：在一轮更新页面PageRank得分的计算中，每个页面将其当前的PageRank值平均分配到本页面包含的出链上，这样每个链接即获得了相应的权值。而每个页面将所有指向本页面的入链所传入的权值求和，即可得到新的PageRank得分。当每个页面都获得了更新后的PageRank值，就完成了一轮PageRank计算。<br>###3.2基本思想：</li>
+<li>2）在一轮中更新页面PageRank得分的计算方法：在一轮更新页面PageRank得分的计算中，每个页面将其当前的PageRank值平均分配到本页面包含的出链上，这样每个链接即获得了相应的权值。而每个页面将所有指向本页面的入链所传入的权值求和，即可得到新的PageRank得分。当每个页面都获得了更新后的PageRank值，就完成了一轮PageRank计算。<h3 id="3-2基本思想："><a href="#3-2基本思想：" class="headerlink" title="3.2基本思想："></a>3.2基本思想：</h3></li>
 </ul>
 <ul>
 <li>pageRank让链接来“投票”</li>
@@ -351,39 +348,36 @@
 <li>如何度量网页本身的重要性呢？</li>
 </ul>
 <p>比如，新华网体育在其首页中对搜狐体育做了链接，人民网体育同样在其首页对搜狐体育做了链接</p>
-<p><img src="image\xinhua.png" alt="xinhua"></p>
-<p><img src="image\sohu.png" alt="sohu"></p>
-<p>可见，搜狐体育被链接的次数较多；同时，人民网体育和新华网体育也都是比较“重要”的网页，因此搜狐体育也应该是比较“重要”的网页。</p>
-<p><img src="\image\web.png" alt="web"></p>
+<p><img src="http://i2.piimg.com/2582592fbbb50acc.png" alt="xinhua"></p>
+<p><img src="http://i2.piimg.com/c815723411d479b7.png" alt="sohu"></p>
+<p>可见，搜狐体育被链接的次数较多；同时，人民网体育和新华网体育也都是比较“重要”的网页，因此搜狐体育也应该是比较“重要”的网页。<br><img src="http://i2.piimg.com/c815723411d479b7.png" alt="web"></p>
 <p>链向网页E的链接远远大于链向网页C的链接，但是网页C的重要性却大于网页E，这是因为网页C被网页B所链接，而网页B有很高的重要性。</p>
-<p>###3.3pagerank计算</p>
-<p>假设一个由只有4个页面组成的集合：A，B，C和D。如果所有页面都链向A，那么A的PR（PageRank）值将是B，C及D的和。</p>
-<p><img src="\image\1.png" alt="1"></p>
+<h3 id="3-3pagerank计算"><a href="#3-3pagerank计算" class="headerlink" title="3.3pagerank计算"></a>3.3pagerank计算</h3><p>假设一个由只有4个页面组成的集合：A，B，C和D。如果所有页面都链向A，那么A的PR（PageRank）值将是B，C及D的和。</p>
+<p><img src="http://i2.piimg.com/dfb72a183867db47.png" alt="1"></p>
 <p>继续假设B也有链接到C，并且D也有链接到包括A的3个页面。一个页面不能投票2次。所以B给每个页面半票。以同样的逻辑，D投出的票只有三分之一算到了A的PageRank上。</p>
-<p><img src="\image\2.png" alt="2"></p>
+<p><img src="http://i2.piimg.com/f0d9972e0c49b1a5.png" alt="2"></p>
 <p>换句话说，根据链出总数平分一个页面的PR值。</p>
-<p><img src="\image\3.png" alt="3"></p>
+<p><img src="http://i2.piimg.com/e51c3fbfb0ee8713.png" alt=""></p>
 <p>下图所示的例子来说明PageRank的具体计算过程。</p>
-<p><img src="\image\4.png" alt="4"></p>
-<p>###3.4修正pagerank值<br>由于存在一些出链为0，也就是那些不链接任何其他网页的网， 也称为孤立网页，使得很多网页能被访问到。因此需要对 PageRank公式进行修正，即在简单公式的基础上增加了阻尼系数（damping factor）q，q一般取值q=0.85。</p>
+<p><img src="http://i2.piimg.com/1575cf7f2a123baa.png" alt="4"></p>
+<h3 id="3-4修正pagerank值"><a href="#3-4修正pagerank值" class="headerlink" title="3.4修正pagerank值"></a>3.4修正pagerank值</h3><p>由于存在一些出链为0，也就是那些不链接任何其他网页的网， 也称为孤立网页，使得很多网页能被访问到。因此需要对 PageRank公式进行修正，即在简单公式的基础上增加了阻尼系数（damping factor）q，q一般取值q=0.85。</p>
 <p>其意义是，在任意时刻，用户到达某页面后并继续向后浏览的概率。1-q= 0.15就是用户停止点击，随机跳到新URL的概率）的算法被用到了所有页面上，估算页面可能被上网者放入书签的概率。</p>
 <p>最后，即所有这些被换算为一个百分比再乘上一个系数q。由于下面的算法，没有页面的PageRank会是0。所以，Google通过数学系统给了每个页面一个最小值。</p>
-<p><img src="\image\5.png" alt="5"></p>
-<p>##4.pagerank完整公式<br><img src="\image\6.png" alt="6"></p>
+<p><img src="http://i2.piimg.com/0cfe1f37c9c488a8.png" alt="5"></p>
+<h2 id="4-pagerank完整公式"><a href="#4-pagerank完整公式" class="headerlink" title="4.pagerank完整公式"></a>4.pagerank完整公式</h2><p><img src="http://i2.piimg.com/d3054bdc98734739.png" alt="6"></p>
 <p>p1,p2,……，pn是被研究的页面，M(pi)是pi链入页面的数量，L(pj)是pj链出页面的数量，而N是所有页面的数量。<br>PageRank值是一个特殊矩阵中的特征向量。这个特征向量为:</p>
-<p>![62]、(image\62.png)</p>
+<p><img src="http://i2.piimg.com/c1ae2245a65a9504.png" alt="62"></p>
 <p>R是如下等式的一个解：</p>
-<p><img src="\image\7.png" alt="7"></p>
+<p><img src="http://i2.piimg.com/2b0b819583cc3d49.png" alt="7"></p>
 <p>如果网页i有指向网页j的一个链接，则</p>
-<p><img src="\image\8.png" alt="8"></p>
-<p><img src="\image\9.png" alt="9"></p>
-<p>###5.求解步骤</p>
-<ul>
+<p><img src="http://i2.piimg.com/5d98393572f0b215.png" alt="8">)</p>
+<p><img src="http://i2.piimg.com/35391c5a5590b2fe.png" alt="9"></p>
+<h3 id="5-求解步骤"><a href="#5-求解步骤" class="headerlink" title="5.求解步骤"></a>5.求解步骤</h3><ul>
 <li>先建立一个网页间的链接关系的模型,即我们需要合适的数据结构表示页面间的连接关系。</li>
 </ul>
 <p>1) 首先我们使用图的形式来表述网页之间关系：</p>
 <p>   现在假设只有四张网页集合：A、B、C，其抽象结构如下图1：</p>
-<p><img src="\image\10.png" alt="10"></p>
+<p><img src="http://i2.piimg.com/7a4c0d2a2246d8ca.png" alt="10"></p>
 <p> 显然这个图是强连通的（从任一节点出发都可以到达另外任何一个节点）。</p>
 <p>2）我们用矩阵表示连通图：</p>
 <p> 用邻接矩阵 P表示这个图中顶点关系 ，如果顶（页面）i向顶点（页面）j有链接情况 ，则pij   =   1 ，否则pij   =   0 。如图2所示。如果网页文件总数为N ， 那么这个网页链接矩阵就是一个N x N  的矩 阵 。 </p>
@@ -391,15 +385,15 @@
 <p>然后将每一行除以该行非零数字之和，即（每行非0数之和就是链接网个数）则得到新矩阵P’，如图3所示。 这个矩阵记录了 每个网页跳转到其他网页的概率，即其中i行j列的值表示用户从页面i 转到页面j的概率。图1 中A页面链向B、C，所以一个用户从A跳转到B、C的概率各为1/2。</p>
 <p>4）概率转移矩阵P</p>
 <p>采用P’ 的转置矩 阵进行计算， 也就是上面提到的概率转移矩阵P 。  如图4所示：</p>
-<p><img src="\image\11.png" alt="11"></p>
+<p><img src="http://i2.piimg.com/0889578ab52b6701.png" alt="11"></p>
 <ul>
 <li>A矩阵计算过程。</li>
 </ul>
-<p><img src="\image\12.png" alt="12"></p>
+<p><img src="http://i2.piimg.com/f496d8b7a34419ca.png" alt="12"></p>
 <ul>
 <li>循环迭代计算PageRank的过程</li>
 </ul>
-<p><img src="\image\13.png" alt="13"></p>
+<p><img src="http://i2.piimg.com/85f39035490f6f97.png" alt="13"></p>
 <p>继续迭代这个过程…</p>
 <p> 直到最后两次的结果近似或者相同，即R最终收敛，R 约等于X，此时计算停止。最终的R 就是各个页面的 PageRank 值。</p>
 <p>用幂法计算PageRank 值总是收敛的，即计算的次数是有限的。</p>
@@ -546,8 +540,8 @@ public static void main(String[] args) {
 10 1
 10 3
 10 4
-</code></pre><p><img src="\image\14.png" alt="14"></p>
-<p><img src="\image\15.png" alt="15"></p>
+</code></pre><p><img src="http://i2.piimg.com/d73b8a4c5370a96e.png" alt="14"></p>
+<p><img src="http://i2.piimg.com/83f93b9d6170b4bc.png" alt="15"></p>
 <p>整个过程实现比较简单，只是初级的代码实现。第一次写技术博客，借鉴了一些他人的过程。</p>
 
           
